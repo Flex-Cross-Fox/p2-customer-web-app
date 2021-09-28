@@ -1,25 +1,25 @@
 <template>
     <div class="eachForm" id="register-form">
-        <form>
+        <form @submit.prevent="registerForm">
             <div id="register">
                 <div class="each-form">
                     <h1>Register</h1>
                 </div>
                 <div class="each-form">
                     <label>Name</label>
-                    <input type="text">
+                    <input type="text" v-model="username">
                 </div>
                 <div class="each-form">
                     <label>Role</label>
-                    <input type="text">
+                    <input type="text" v-model="role">
                 </div>
                 <div class="each-form">
                     <label>Email</label>
-                    <input type="email">
+                    <input type="email" v-model="email">
                 </div>
                 <div class="each-form">
                     <label>Password</label>
-                    <input type="password">
+                    <input type="password" v-model="password">
                 </div>
                 <div class="each-form">
                     <button type="submit">Register</button>
@@ -32,7 +32,20 @@
 <script>
 
 export default {
-  components: {}
+  components: {},
+  data () {
+    return {
+      username: '',
+      role: '',
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    registerForm () {
+      this.$store.dispatch('register', { username: this.username, role: this.role, email: this.email, password: this.password })
+    }
+  }
 }
 </script>
 

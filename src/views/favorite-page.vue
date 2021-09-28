@@ -1,16 +1,29 @@
 <template>
     <div>
-        <Moviecard/>
+        <Moviecard v-for="card in favoriteList" :key="card.id" :card="card" />
     </div>
 </template>
 
 <script>
 
-import Moviecard from '../components/movie-card.vue'
+import Moviecard from '../components/favorite-card.vue'
 
 export default {
   components: {
     Moviecard
+  },
+  computed: {
+    favoriteList () {
+      return this.$store.state.favoriteList
+    }
+  },
+  methods: {
+    getFavorite () {
+      this.$store.dispatch('showFavorite')
+    }
+  },
+  created () {
+    this.getFavorite()
   }
 }
 </script>

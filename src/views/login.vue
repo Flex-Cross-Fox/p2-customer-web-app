@@ -1,17 +1,17 @@
 <template>
     <div class="eachForm" id="login-form">
-        <form @submit.prevent="">
+        <form @submit.prevent="loginForm">
             <div id="login">
                 <div class="each-form">
                     <h1>Login</h1>
                 </div>
                 <div class="each-form">
                     <label>Email</label>
-                    <input type="text">
+                    <input type="text" v-model="email">
                 </div>
                 <div class="each-form">
                     <label>Password</label>
-                    <input type="password">
+                    <input type="password" v-model="password">
                 </div>
                 <div class="each-form">
                     <button type="submit">Login</button>
@@ -24,10 +24,22 @@
 <script>
 
 export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
   components: {},
   methods: {
-    loginForm (email, password) {
-      this.$router.push()
+    loginForm () {
+      this.$store.dispatch('login', { email: this.email, password: this.password })
+    }
+  },
+  computed: {
+    access_token () {
+      console.log('dapat access token')
+      return this.$store.state.access_token
     }
   }
 }

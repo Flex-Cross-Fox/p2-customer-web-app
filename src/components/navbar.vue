@@ -2,11 +2,11 @@
   <nav>
     <div id="navbar">
       <div class="navbar-contain">
-          <router-link class="navbar-a" to="/home">Home</router-link>
-          <router-link class="navbar-a" to="/register">Register</router-link>
-          <router-link class="navbar-a" to="/login">Login</router-link>
-          <router-link class="navbar-a" to="/logout">Logout</router-link>
-          <router-link class="navbar-a" to="/bookmark">Favorite</router-link>
+          <router-link v-if="loginCondition" class="navbar-a" to="/home">Home</router-link>
+          <router-link v-if="!loginCondition" class="navbar-a" to="/register">Register</router-link>
+          <router-link v-if="!loginCondition" class="navbar-a" to="/login">Login</router-link>
+          <a v-if="loginCondition" class="navbar-a" @click.prevent="logout">Logout</a>
+          <a v-if="loginCondition" class="navbar-a" @click.prevent="showFavoriteList">Favorite</a>
       </div>
     </div>
   </nav>
@@ -14,7 +14,39 @@
 
 <script>
 export default {
-  methods: {}
+  methods: {
+    logout () {
+      console.log('masuk')
+      localStorage.removeItem('token')
+      this.$store.commit('assignLogin', false)
+      // router.push({ name: 'Login' })
+      this.$router.push({ name: 'Login' })
+    },
+    login () {
+      if (localStorage.getItem('token')) {
+        this.$store.commit('assignLogin', true)
+      } else {
+        this.$store.dispatch('assignLogin', false)
+      }
+    },
+    showFavoriteList () {
+      this.$store.dispatch('showFavorite')
+      // router.push({ name: 'Bookmark' })
+      this.$router.push({ name: 'Bookmark' })
+    }
+  },
+  created () {
+    this.login()
+  },
+  computed: {
+    loginCondition () {
+      return this.$store.state.login
+    }
+    // ,
+    // favoriteCondition () {
+    //   return this.$store.state.favoriteCondition
+    // }
+  }
 }
 </script>
 

@@ -6,7 +6,7 @@
 
 <script>
 
-import Moviecard from '../components/movie-card.vue'
+import Moviecard from '../components/favorite-card.vue'
 
 export default {
   components: {

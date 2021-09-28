@@ -1,7 +1,7 @@
 <template>
-  <!-- <div class="home"> -->
-    <movieCard/>
-  <!-- </div> -->
+  <div id="movieHome">
+    <movieCard v-for="movie in moviesArray" :key="movie.id" :movie="movie"/>
+  </div>
 </template>
 
 <script>
@@ -11,6 +11,24 @@ export default {
   components: {
     movieCard
   },
-  props: []
+  props: [],
+  computed: {
+    moviesArray () {
+      return this.$store.state.movies
+    }
+  },
+  methods: {
+    getMovies (id) {
+      this.$store.dispatch('movies', id)
+    }
+  },
+  created () {
+    this.getMovies()
+  }
 }
 </script>
+
+<style>
+#movieHome {
+}
+</style>
