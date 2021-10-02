@@ -12,7 +12,10 @@ export default new Vuex.Store({
     login: false,
     movieDetail: {},
     favoriteList: [],
-    favoriteCondition: false
+    favoriteCondition: false,
+    totalMovie: [],
+    currentlyPage: 1,
+    page: 1
   },
   mutations: { // commit
     movies (state, payload) {
@@ -26,6 +29,26 @@ export default new Vuex.Store({
     },
     assignFavoriteList (state, payload) {
       state.favoriteList = payload
+    },
+    pagination (state, payload) {
+      state.page = payload
+    },
+    currently (state, payload) {
+      state.currentlyPage = payload
+    },
+    next (state, payload) {
+      if (state.page > payload) {
+        state.currentlyPage = payload + 1
+      } else {
+        state.currentlyPage = payload
+      }
+    },
+    Previous (state, Previous) {
+      if (Previous === 1) {
+        state.currentlyPage = 1
+      } else {
+        state.currentlyPage -= 1
+      }
     }
   },
   actions: { // dispatch
@@ -59,8 +82,18 @@ export default new Vuex.Store({
         url: `${baseURL}/movies`
       })
         .then(({ data }) => {
-          console.log(data)
           context.commit('movies', data)
+        })
+        .catch((err) => console.log(err))
+    },
+    moviesPage (context) {
+      axios({
+        method: 'get',
+        url: `${baseURL}/movies/pag`
+      })
+        .then(({ data }) => {
+          data = Math.ceil(data.length / 9)
+          context.commit('pagination', data)
         })
         .catch((err) => console.log(err))
     },
@@ -110,6 +143,50 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data)
           context.dispatch('showFavorite')
+        })
+        .catch((err) => console.log(err))
+    },
+    toThisPage (context, id) {
+      axios({
+        method: 'get',
+        url: `${baseURL}/movies/?page=${id}`,
+        headers: { token: localStorage.getItem('token') }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          context.commit('movies', data)
+          context.commit('currently', id)
+        })
+        .catch((err) => console.log(err))
+    },
+    next (context, page) {
+      context.commit('next', page)
+    },
+    Previous (context, page) {
+      context.commit('Previous', page)
+    },
+    searchTitle (context, title) {
+      console.log(title)
+      axios({
+        method: 'get',
+        url: `${baseURL}/movies/?title=${title}`,
+        headers: { token: localStorage.getItem('token') }
+      })
+        .then(({ data }) => {
+          // console.log(data)
+          // context.commit('pagination', Math.ceil(data.length / 9))
+          context.commit('movies', data)
+        })
+        .catch((err) => console.log(err))
+    },
+    searchDate (context, start) {
+      axios({
+        method: 'get',
+        url: `${baseURL}/movies/?start=${start}`
+      })
+        .then(({ data }) => {
+          console.log(data)
+          context.commit('movies', data)
         })
         .catch((err) => console.log(err))
     }

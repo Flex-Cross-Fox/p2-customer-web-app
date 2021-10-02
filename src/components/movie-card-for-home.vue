@@ -37,7 +37,6 @@
       </div>
 
     </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -66,8 +65,8 @@ label{
 }
 
 .movie-card input{
-    height: 39px;
-    font-size: 39px;
+  height: 39px;
+  font-size: 39px;
 }
 
 .movie-card{
@@ -84,11 +83,4 @@ label{
 a {
     text-decoration: none;
 }
-/* table, th, td {
-  border: 1px solid black;
-}
-
-td {
-  padding: 5px;
-} */
 </style>

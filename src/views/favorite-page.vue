@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Moviecard v-for="card in favoriteList" :key="card.id" :card="card" />
+    <div class="row">
+        <Moviecard class="col-4" v-for="card in favoriteList" :key="card.id" :card="card" />
     </div>
 </template>
 

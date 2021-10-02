@@ -1,15 +1,20 @@
 <template>
-  <div id="movieHome">
-    <movieCard v-for="movie in moviesArray" :key="movie.id" :movie="movie"/>
+<div>
+  <div class="row">
+    <movieCard class="col-4" v-for="movie in moviesArray" :key="movie.id" :movie="movie"/>
   </div>
+  <Pagination/>
+</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import movieCard from '../components/movie-card-for-home.vue'
+import Pagination from '../components/pagination.vue'
 export default {
   components: {
-    movieCard
+    movieCard,
+    Pagination
   },
   props: [],
   computed: {
@@ -25,10 +30,11 @@ export default {
   created () {
     this.getMovies()
   }
+  // watch: {
+  //   moviesArray
+  // }
 }
 </script>
 
 <style>
-#movieHome {
-}
 </style>
