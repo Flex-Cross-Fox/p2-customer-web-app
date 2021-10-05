@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
 const baseURL = 'http://localhost:3000'
+// const baseURL = 'https://git.heroku.com/phase2-c2.git'
 
 Vue.use(Vuex)
 
@@ -15,11 +16,15 @@ export default new Vuex.Store({
     favoriteCondition: false,
     totalMovie: [],
     currentlyPage: 1,
-    page: 1
+    page: 1,
+    QrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='
   },
   mutations: { // commit
     movies (state, payload) {
       state.movies = payload
+    },
+    AssignQrCode (state, payload) {
+      state.QrCode = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + payload
     },
     assignLogin (state, payload) {
       state.login = payload
@@ -105,6 +110,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data)
+          context.commit('AssignQrCode', data.id)
           context.commit('assignMovieDetail', data)
           router.push({ name: 'Detail' })
         })

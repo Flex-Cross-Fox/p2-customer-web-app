@@ -42,6 +42,13 @@
     <div class="type-of-card">
         <p>{{ inputData.status }}</p>
     </div>
+
+    <div class="card-title">
+        <p>QR Code</p>
+    </div>
+    <div class="type-of-card">
+        <img :src="linkQRcode" alt="QR Code">
+    </div>
   </div>
 </template>
 
@@ -64,6 +71,9 @@ export default {
   computed: {
     inputData () {
       return this.$store.state.movieDetail
+    },
+    linkQRcode () {
+      return this.$store.state.QrCode
     }
   }
 }

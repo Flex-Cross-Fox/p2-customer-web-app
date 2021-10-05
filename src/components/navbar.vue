@@ -99,10 +99,6 @@ export default {
     padding: 0;
 }
 
-.navbar-input {
-
-}
-
 #navbar {
   display: flex;
   background-color: palegoldenrod;
